@@ -1,7 +1,7 @@
 import App from "@/app/App";
 import { createRoot } from "react-dom/client";
 
-import "@/sass/global.scss";
+import "./app/index.scss";
 
 const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);

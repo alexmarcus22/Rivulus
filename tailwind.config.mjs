@@ -2,5 +2,17 @@
 
 export default {
 	content: ["./src/**/*.{mjs,js,ts,jsx,tsx}"],
+	theme: {
+		container: {
+			center: true,
+			padding: {
+				DEFAULT: "1rem",
+				sm: "2rem",
+				lg: "15rem",
+				xl: "15rem",
+				"2xl": "6rem",
+			},
+		},
+	},
 	plugins: [],
 };

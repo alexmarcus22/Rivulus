@@ -149,5 +149,6 @@
 	// ---
 	// Security
 	"security.workspace.trust.enabled": true,
-	"security.workspace.trust.untrustedFiles": "prompt"
+	"security.workspace.trust.untrustedFiles": "prompt",
+	"files.asso"
 }
