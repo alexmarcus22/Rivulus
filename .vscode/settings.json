@@ -142,8 +142,9 @@
 	],
 	// ---
 	// npm Scripts
-	"npm.packageManager": "bun",
+	"npm.packageManager": "pnpm",
 	"npm.autoDetect": "on",
+	"npm.runSilent": false,
 	"npm.enableRunFromFolder": true,
 	// ---
 	// Security
