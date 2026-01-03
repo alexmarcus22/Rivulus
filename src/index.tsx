@@ -1,7 +1,7 @@
+import App from "@/app/App";
 import { createRoot } from "react-dom/client";
-import App from "App";
 
-import "tailwindcss/tailwind.css";
+import "@/sass/global.scss";
 
 const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
