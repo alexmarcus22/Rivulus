@@ -1,0 +1,13 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Launch Edge against localhost",
+			"url": "http://localhost:5173",
+			"runtimeExecutable": "/opt/helium-browser/helium-0.7.7.1-x86_64.AppImage",
+			"webRoot": "${workspaceFolder}"
+		}
+	]
+}
