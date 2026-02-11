@@ -2,7 +2,6 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 import DefaulLayout from "@/layouts/default";
-import NoLayout from "@/layouts/no-layout";
 
 import HomeComponent from "@/pages/Home/Home";
 import LoginComponent from "@/pages/User/Login/Login";
@@ -19,8 +18,6 @@ root.render(
 		<Routes>
 			<Route element={<DefaulLayout />}>
 				<Route index element={<HomeComponent />} />
-			</Route>
-			<Route element={<NoLayout />}>
 				<Route path="sign-in" element={<LoginComponent />} />
 				<Route path="sign-up" element={<RegisterComponent />} />
 				<Route path="reset-password" element={<RecoverPasswordComponent />} />

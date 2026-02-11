@@ -24,53 +24,54 @@ const RecoverPasswordComponent: React.FC = () => {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-50">
-			<div className="w-full max-w-sm p-8 space-y-6 ">
-				<div className="text-center">
-					<h1 className="text-3xl font-bold text-gray-900 mb-1">Recover Password</h1>
-					<p className="text-gray-500 text-sm">Enter your email to reset your password</p>
-				</div>
+		<div className="max-w-md mt-10 p-6 bg-white rounded-lg w-100">
+			<button
+				onClick={() => window.history.back()}
+				className="absolute hover:cursor-pointer top-4 left-4 p-2 text-gray-600 hover:text-black transition"
+				aria-label="Go back">
+				<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+				</svg>{" "}
+				Back
+			</button>
 
-				{isSubmitted ? (
-					<div className="text-center space-y-4">
-						<p className="text-green-600 font-medium">
-							If an account exists with this email, you will receive a password reset link.
-						</p>
-						<a href="sign-in" className="text-purple-600 hover:text-purple-700 font-medium">
-							Back to Sign in
-						</a>
-					</div>
-				) : (
-					<form onSubmit={handleSubmit} className="space-y-4">
-						<div>
-							<input
-								type="email"
-								id="email"
-								name="email"
-								value={formData.email}
-								onChange={handleChange}
-								placeholder="Email"
-								required
-								className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-							/>
-						</div>
-
-						<button
-							type="submit"
-							disabled={isLoading}
-							className="w-full py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition disabled:opacity-50 disabled:cursor-not-allowed">
-							{isLoading ? "Sending..." : "Send Reset Link"}
-						</button>
-					</form>
-				)}
-
-				<p className="text-center text-gray-500 text-sm">
-					Remember your password?{" "}
-					<a href="sign-in" className="text-purple-600 hover:text-purple-700 font-medium">
-						Sign in
-					</a>
-				</p>
+			<div className="text-center mb-3">
+				<h1 className="text-3xl font-bold text-gray-900 mb-1">Recover Password</h1>
+				<p className="text-gray-500 text-sm">Enter your email to reset your password</p>
 			</div>
+
+			{isSubmitted ? (
+				<div className="text-center space-y-4">
+					<p className="text-green-600 font-medium">
+						If an account exists with this email, you will receive a password reset link.
+					</p>
+					<a href="sign-in" className="text-black hover:text-gray-700 font-medium">
+						Back to Sign in
+					</a>
+				</div>
+			) : (
+				<form onSubmit={handleSubmit} className="space-y-4">
+					<div>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							value={formData.email}
+							onChange={handleChange}
+							placeholder="Email"
+							required
+							className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						/>
+					</div>
+
+					<button
+						type="submit"
+						disabled={isLoading}
+						className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blacktransition disabled:opacity-50 disabled:cursor-not-allowed">
+						{isLoading ? "Sending..." : "Send Reset Link"}
+					</button>
+				</form>
+			)}
 		</div>
 	);
 };

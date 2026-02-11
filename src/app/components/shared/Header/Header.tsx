@@ -12,10 +12,10 @@ const Header: React.FC<HeaderProps> = ({ title = "Rivulus" }): JSX.Element => {
 					<h1 className="header-title text-[2rem] font-semibold">{title}</h1>
 					<ul className="nav-links flex space-x-7">
 						<li className="nav-link">
-							<a href="">Home</a>
+							<a href="/">Home</a>
 						</li>
 						<li className="nav-link">
-							<a href="sign-in">Login</a>
+							<a href="/sign-in">Login</a>
 						</li>
 						<li className="nav-link">
 							<a href="sign-up">Register</a>
