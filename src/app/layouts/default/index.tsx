@@ -1,20 +1,13 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router";
 
-import { useAppDispatch } from "@/state/hooks";
-
 import Header from "@/components/shared/Header/Header";
 
 export const DefaultLayout: React.FC = (): JSX.Element => {
-	const dispatch = useAppDispatch();
 	const location = useLocation();
 
 	const authPaths = ["/sign-in", "/sign-up", "/reset-password"];
 	const isAuthPage = authPaths.includes(location.pathname);
-
-	// useInterval((): void => {
-	// 	dispatch(fetchHealthStatusAsync());
-	// }, 1000);
 
 	return (
 		<div className="layout relative overflow-auto" role="region">

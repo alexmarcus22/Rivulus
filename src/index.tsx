@@ -1,8 +1,9 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
-import AppProvider from "@/app/providers";
+import Application from "@/app/Application";
 
+import Providers from "@/app/providers";
 import DefaulLayout from "@/layouts/default";
 
 import HomeComponent from "@/pages/Home/Home";
@@ -15,15 +16,17 @@ const root = createRoot(container);
 
 root.render(
 	<BrowserRouter>
-		<AppProvider>
-			<Routes>
-				<Route element={<DefaulLayout />}>
-					<Route index element={<HomeComponent />} />
-					<Route path="sign-in" element={<LoginComponent />} />
-					<Route path="sign-up" element={<RegisterComponent />} />
-					<Route path="reset-password" element={<RecoverPasswordComponent />} />
-				</Route>
-			</Routes>
-		</AppProvider>
+		<Application>
+			<Providers>
+				<Routes>
+					<Route element={<DefaulLayout />}>
+						<Route index element={<HomeComponent />} />
+						<Route path="sign-in" element={<LoginComponent />} />
+						<Route path="sign-up" element={<RegisterComponent />} />
+						<Route path="reset-password" element={<RecoverPasswordComponent />} />
+					</Route>
+				</Routes>
+			</Providers>
+		</Application>
 	</BrowserRouter>
 );

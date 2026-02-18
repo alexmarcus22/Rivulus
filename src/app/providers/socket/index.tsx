@@ -12,12 +12,27 @@ export const SocketContext = createContext<Socket | null>(null);
 export const SocketProvider = ({ children }: ISocketProviderProps) => {
 	const [currentSocket, setCurrentSocket] = useState<Socket | null>(null);
 
-	console.log(currentSocket);
-
 	useEffect(() => {
-		socket.on("connect", (): void => console.log("Connected:", socket.id));
-		socket.on("disconnect", (): void => console.log("Disconnected"));
-		socket.on("connect_error", (e): void => console.log(e));
+		let isConnected = false;
+
+		socket.on("connect", (): void => {
+			if (!isConnected) {
+				console.log("Connected:", socket.id);
+				isConnected = true;
+			}
+		});
+
+		socket.on("disconnect", (): void => {
+			if (isConnected) {
+				console.log("Disconnected");
+				isConnected = false;
+			}
+		});
+
+		// Suppress connect_error logs to prevent console spam
+		socket.on("connect_error", (): void => {
+			// Silently handle connection errors - user will see toast notification
+		});
 
 		setCurrentSocket(socket);
 		return () => {

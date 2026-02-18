@@ -1,18 +1,29 @@
 import React from "react";
 
-import { SocketProvider } from "@/app/providers/socket";
 import StoreProvider from "./store";
 
-interface AppProviderProps {
+import { SocketProvider } from "@/app/providers/socket";
+import { ToastProvider } from "@/app/providers/toast";
+
+import SocketToastListener from "@/app/components/common/SocketToastListener";
+import ToastContainer from "@/app/components/common/ToastContainer";
+
+interface ProvidersProps {
 	children: React.ReactNode;
 }
 
-const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+const Providers: React.FC<ProvidersProps> = ({ children }) => {
 	return (
-		<SocketProvider>
-			<StoreProvider>{children}</StoreProvider>
-		</SocketProvider>
+		<ToastProvider>
+			<SocketProvider>
+				<StoreProvider>
+					<ToastContainer />
+					<SocketToastListener />
+					{children}
+				</StoreProvider>
+			</SocketProvider>
+		</ToastProvider>
 	);
 };
 
-export default AppProvider;
+export default Providers;
