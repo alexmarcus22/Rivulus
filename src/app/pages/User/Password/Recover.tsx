@@ -1,26 +1,42 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+import EmailInput from "@/utils/inputs/email";
+
+const initialValues = {
+	email: "",
+};
 
 const RecoverPasswordComponent: React.FC = () => {
-	const [formData, setFormData] = useState({
-		email: "",
+	const resolver = yup.object({
+		email: yup.string().email("Invalid email format").required("Email is required"),
 	});
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	};
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: initialValues,
+		resolver: yupResolver(resolver),
+	});
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setIsLoading(true);
-		console.log("Recover Password:", formData);
-		setIsLoading(false);
-		setIsSubmitted(true);
+	const onSubmit = async (data: typeof initialValues) => {
+		try {
+			reset();
+			setIsLoading(true);
+			await new Promise((resolve) => setTimeout(resolve, 2000));
+			setIsSubmitted(true);
+		} catch (error) {
+			return error instanceof Error ? error.message : "An unknown error occurred";
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -50,24 +66,22 @@ const RecoverPasswordComponent: React.FC = () => {
 					</a>
 				</div>
 			) : (
-				<form onSubmit={handleSubmit} className="space-y-4">
+				<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 					<div>
-						<input
-							type="email"
+						<EmailInput
 							id="email"
-							name="email"
-							value={formData.email}
-							onChange={handleChange}
+							register={register}
+							autoComplete="email"
 							placeholder="Email"
-							required
-							className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+							required={false}
+							error={errors.email?.message}
 						/>
 					</div>
 
 					<button
 						type="submit"
 						disabled={isLoading}
-						className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blacktransition disabled:opacity-50 disabled:cursor-not-allowed">
+						className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-black transition disabled:opacity-50 disabled:cursor-not-allowed">
 						{isLoading ? "Sending..." : "Send Reset Link"}
 					</button>
 				</form>

@@ -20,12 +20,16 @@
 		"types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
 		"paths": {
 			"@/app/*": ["./src/app/*"],
+			"@/api/*": ["./src/app/api/*"],
 			"@/sass/*": ["./src/app/assets/sass/*"],
 			"@/css/*": ["./src/app/assets/css/*"],
 			"@/components/*": ["./src/app/components/*"],
 			"@/utils/*": ["./src/app/utils/*"],
 			"@/layouts/*": ["./src/app/layouts/*"],
-			"@/pages/*": ["./src/app/pages/*"]
+			"@/pages/*": ["./src/app/pages/*"],
+			"@/state/*": ["./src/app/state/*"],
+			"@/hooks/*": ["./src/app/hooks/*"],
+			"@/lib/*": ["./src/lib/*"]
 		}
 	},
 	"include": ["src"],

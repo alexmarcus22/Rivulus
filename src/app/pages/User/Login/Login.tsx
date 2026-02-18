@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+import EmailInput from "@/utils/inputs/email";
+import PasswordInput from "@/utils/inputs/password";
+
+const initialValues = {
+	email: "",
+	password: "",
+};
 
 const LoginComponent: React.FC = (): JSX.Element => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const resolver = yup.object({
+		email: yup.string().email("Invalid email format").required("Email is required"),
+		password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+	});
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		console.log("Login attempt:", { email, password });
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: initialValues,
+		resolver: yupResolver(resolver),
+	});
+
+	const onSubmit = async (data: typeof initialValues) => {
+		try {
+			console.log(data);
+			reset();
+		} catch (error) {
+			return error instanceof Error ? error.message : "An unknown error occurred";
+		}
 	};
 
 	return (
@@ -25,28 +52,26 @@ const LoginComponent: React.FC = (): JSX.Element => {
 				<p className="text-gray-500 text-sm">Sign in to your account</p>
 			</div>
 
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4" method="POST">
 				<div>
-					<input
-						type="email"
+					<EmailInput
 						id="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						register={register}
+						autoComplete="email"
 						placeholder="Email"
-						required
+						required={false}
+						error={errors.email?.message}
 					/>
 				</div>
 
 				<div>
-					<input
-						type="password"
+					<PasswordInput
 						id="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						register={register}
+						autoComplete="current-password"
 						placeholder="Password"
-						required
+						required={false}
+						error={errors.password?.message}
 					/>
 				</div>
 

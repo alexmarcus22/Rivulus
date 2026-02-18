@@ -1,27 +1,50 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import EmailInput from "../../../utils/inputs/email";
+import PasswordInput from "../../../utils/inputs/password";
+
+const initialValues = {
+	name: "",
+	email: "",
+	password: "",
+	confirmPassword: "",
+};
 
 const RegisterComponent: React.FC = () => {
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-	});
 	const [isLoading, setIsLoading] = useState(false);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	};
+	const resolver = yup.object({
+		name: yup.string().min(2, "Name must be at least 2 characters").required("Name is required"),
+		email: yup.string().email("Invalid email format").required("Email is required"),
+		password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+		confirmPassword: yup
+			.string()
+			.oneOf([yup.ref("password")], "Passwords must match")
+			.required("Confirm password is required"),
+	});
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setIsLoading(true);
-		console.log("Register:", formData);
-		setIsLoading(false);
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: initialValues,
+		resolver: yupResolver(resolver),
+	});
+
+	const onSubmit = async (data: typeof initialValues) => {
+		try {
+			setIsLoading(true);
+			console.log("Register:", data);
+			reset();
+		} catch (error) {
+			return error instanceof Error ? error.message : "An unknown error occurred";
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -41,63 +64,55 @@ const RegisterComponent: React.FC = () => {
 				<p className="text-gray-500 text-sm">Sign up to get started</p>
 			</div>
 
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div>
 					<input
 						type="text"
 						id="name"
-						name="name"
-						value={formData.name}
-						onChange={handleChange}
 						placeholder="Full Name"
-						required
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						{...register("name")}
+						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
 					/>
+					{errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
 				</div>
 
 				<div>
-					<input
-						type="email"
+					<EmailInput
 						id="email"
-						name="email"
-						value={formData.email}
-						onChange={handleChange}
+						register={register}
+						autoComplete="email"
 						placeholder="Email"
-						required
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						required={false}
+						error={errors.email?.message}
 					/>
 				</div>
 
 				<div>
-					<input
-						type="password"
+					<PasswordInput
 						id="password"
-						name="password"
-						value={formData.password}
-						onChange={handleChange}
+						register={register}
+						autoComplete="new-password"
 						placeholder="Password"
-						required
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						required={false}
+						error={errors.password?.message}
 					/>
 				</div>
 
 				<div>
-					<input
-						type="password"
+					<PasswordInput
 						id="confirmPassword"
-						name="confirmPassword"
-						value={formData.confirmPassword}
-						onChange={handleChange}
+						register={register}
+						autoComplete="new-password"
 						placeholder="Confirm Password"
-						required
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackfocus:border-transparent"
+						required={false}
+						error={errors.confirmPassword?.message}
 					/>
 				</div>
 
 				<button
 					type="submit"
 					disabled={isLoading}
-					className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blacktransition disabled:opacity-50 disabled:cursor-not-allowed">
+					className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-black transition disabled:opacity-50 disabled:cursor-not-allowed">
 					{isLoading ? "Creating Account..." : "Sign Up"}
 				</button>
 			</form>

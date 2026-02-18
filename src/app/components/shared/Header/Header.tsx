@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ title = "Rivulus" }): JSX.Element => {
 							<a href="/sign-in">Login</a>
 						</li>
 						<li className="nav-link">
-							<a href="sign-up">Register</a>
+							<a href="/sign-up">Register</a>
 						</li>
 						<li className="nav-link">
 							<a href="#">Contact</a>
