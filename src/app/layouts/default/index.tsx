@@ -2,10 +2,8 @@ import React from "react";
 import { Outlet, useLocation } from "react-router";
 
 import { useAppDispatch } from "@/state/hooks";
-import { fetchHealthStatusAsync } from "@/state/slices/healthSlice";
 
 import Header from "@/components/shared/Header/Header";
-import useInterval from "@/hooks/interval";
 
 export const DefaultLayout: React.FC = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -14,9 +12,9 @@ export const DefaultLayout: React.FC = (): JSX.Element => {
 	const authPaths = ["/sign-in", "/sign-up", "/reset-password"];
 	const isAuthPage = authPaths.includes(location.pathname);
 
-	useInterval((): void => {
-		dispatch(fetchHealthStatusAsync());
-	}, 1000);
+	// useInterval((): void => {
+	// 	dispatch(fetchHealthStatusAsync());
+	// }, 1000);
 
 	return (
 		<div className="layout relative overflow-auto" role="region">

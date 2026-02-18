@@ -1,4 +1,3 @@
-import { BackendHealthBadge } from "@/components/common/HealthBadge";
 import React, { FC } from "react";
 
 const HomeComponent: FC = (): React.ReactElement => {
@@ -8,7 +7,6 @@ const HomeComponent: FC = (): React.ReactElement => {
 				<h1 className="text-[5rem] font-semibold" role="heading">
 					Welcome!
 				</h1>
-				<BackendHealthBadge />
 			</div>
 		</div>
 	);

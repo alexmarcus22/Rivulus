@@ -3,8 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-import EmailInput from "@/utils/inputs/email";
-import PasswordInput from "@/utils/inputs/password";
+import EmailInput from "@/app/utils/inputs/email";
+import PasswordInput from "@/app/utils/inputs/password";
 
 const initialValues = {
 	email: "",

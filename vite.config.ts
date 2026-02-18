@@ -7,7 +7,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config https://vitest.dev/config
 export default defineConfig(({ mode }) => {
 	const modeEnv = process.env.NODE_ENV || mode;
-	console.log(modeEnv);
 	const isProduction = modeEnv === "production";
 	return {
 		plugins: [
